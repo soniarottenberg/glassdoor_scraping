@@ -1,4 +1,3 @@
-// made with love by Sonia Rottenberg
 const axios = require('axios');
 const cheerio = require('cheerio');
 
