@@ -1,20 +1,19 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+// glassdoor search url
+let keywords = ["interessement", "CET"]
+
 // stupid counter
 let P = 1
 counter = () => { P += 1 }
-counter();
+// counter();
 
-let url = `https://www.glassdoor.fr/Emploi/france-int%C3%A9ressement-emplois-SRCH_IL.0,6_IN86_KO7,20_IP${P}.htm`;
+const urls = keywords.map(item => `https://www.glassdoor.fr/Emploi/france-${item}-emplois-SRCH_IL.0,6_IN86_KO7,20_IP${P}.htm`)
 
-urls = []
-
-console.log(P);
-console.log(url);
-
-// scraper (static part)
-axios(url)
+for (let url of urls) {
+    console.log(url);
+    axios(url)
     .then(response => {
     const html = response.data;
     const $ = cheerio.load(html)
@@ -35,3 +34,7 @@ axios(url)
     console.log(glassdoorCompaniesName);
     })
     .catch(console.error);
+
+
+}
+// scraper (static part)
