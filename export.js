@@ -1,3 +1,3 @@
-import { function } from 'glassdoorSraper';
+import { foo } from 'glassdoor_scraping/glassdoorScraper.js';
 
 console.log(glassdoorCompaniesName);
