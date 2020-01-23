@@ -2,10 +2,10 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 // glassdoor tableau de terme de recherche
-let keywords = ["interessement", "CET"]
+let keywords = ["interessement", "prime-de-participation", "compte-epargne-temps"]
 
 // tableau d'urls
-const urls = keywords.map(item => `https://www.glassdoor.fr/Emploi/france-${item}-emplois-SRCH_IL.0,6_IN86_KO7,20_IP.htm`)
+const urls = keywords.map(keyword => `https://www.glassdoor.fr/Emploi/france-${keyword}-emplois-SRCH_IL.0,6_IN86_KO7,20.htm`)
 
 const foo = () => {
     for (let url of urls) {
@@ -15,25 +15,27 @@ const foo = () => {
         const html = response.data;
         const $ = cheerio.load(html)
         const jobsTable = $('.jlGrid > li');
+        const searchBar = $('.search-bar > input');
         const glassdoorCompaniesName = [];
-    
+
         jobsTable.each(function () {
             const name = $(this).find('.jobEmpolyerName').text();
-            const description = $(this).find('.jobDetails').text();
-    
             glassdoorCompaniesName.push({
-            name,
-            description
+                name
             });
         });
-        console.log(typeof glassdoorCompaniesName);
+
+        searchBar.each(function () {
+            const search = $(this).find('.keyword').text();
+            glassdoorCompaniesName.push({
+                search
+            });
+        });
+
         console.log(glassdoorCompaniesName);
         })
         .catch(console.error);
     }
-    
 }
 
 foo();
-
-export { foo }; 
